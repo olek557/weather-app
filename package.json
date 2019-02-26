@@ -1,0 +1,25 @@
+{
+  "name": "weather-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel -p 3000 src/index.html"
+  },
+  "repository": "git+https://github.com/olek557/weather-app.git",
+  "keywords": [],
+  "author": "Oleksiy Derkach <oleksiy.derkach@perfectial.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/olek557/weather-app/issues"
+  },
+  "homepage": "https://github.com/olek557/weather-app#readme",
+  "devDependencies": {
+    "autoprefixer": "^9.4.9",
+    "node-sass": "^4.11.0",
+    "parcel-bundler": "^1.11.0"
+  },
+  "dependencies": {
+    "normalize.css": "^8.0.1"
+  }
+}

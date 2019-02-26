@@ -1,1 +1,2 @@
-console.log("here");
+import '../styles/general.scss';
+import 'normalize.css';
