@@ -1,54 +1,70 @@
-@font-face {
-    font-family: 'MeteoconsRegular';
-    src: url('../fonts/meteocons-webfont.eot');
-    src: url('../fonts/meteocons-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/meteocons-webfont.woff') format('woff'),
-         url('../fonts/meteocons-webfont.ttf') format('truetype'),
-         url('../fonts/meteocons-webfont.svg#MeteoconsRegular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-  }
-  
+@import "components/typography";
+@import "components/buttons";
+@import "components/card";
+@import "components/forms";
 
-  body {
-    background-image: url(https://images.unsplash.com/photo-1550655140-2125ba9558ea?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1600&h=900&fit=crop&ixid=eyJhcHBfaWQiOjF9);
-    background-size: cover;
-    background-attachment: fixed;
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  height: 100%;
+  // background-image: url(https://source.unsplash.com/random);
+  background-image: url(https://images.unsplash.com/photo-1550655140-2125ba9558ea?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1600&h=900&fit=crop&ixid=eyJhcHBfaWQiOjF9);
+  background-size: cover;
+  background-attachment: fixed;
+  position: relative;
+  color: #555;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  & + & {
+    margin-top: 10px;
   }
-  
-  .container--small {
-    width: 500px;
-    margin: 100px auto;
-  }
-  
-  .card {
-    display: flex;
-    flex-direction: column;
-    height: 400px;
-    border-radius: 10px;
-    overflow: hidden;
-    background-color: rgba(255, 255, 255, .4);
-  }
-  
-  .card__content {
-    background-color: rgba(255, 255, 255, .4);
-  }
-  
-  .card__header {
-    height: 50px;
-  }
-  
-  .card__search {
-    position: relative;
-  }
-  
-  .search-input {
-    width: 100%;
-    height: 50px;
-    overflow: hidden;
-  }
-  
-  .search-input__input {
-    background: transparent;
-    border: none;
-  }
+}
+
+.row__name {
+  font-size: 12px;
+  width: 80px;
+}
+
+.row__value {
+  font-size: 16px;
+}
+
+.forecast {
+  display: flex;
+  border-top: 1px solid rgba(#000, .1);
+  border-bottom: 1px solid rgba(#000, .1);
+  margin: 0 -15px;
+}
+
+.forecast__item {
+  padding: 15px 10px;
+  text-align: center;
+  flex: 1;
+  & + & {
+    border-left: 1px solid rgba(#000, .1);
+  } 
+}
+
+.forecast__date {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.forecast__temp {
+  font-size: 21px;
+  margin-bottom: 5px;
+}
+
+.forecast__icon {
+  font-size: 25px;
+}
