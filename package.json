@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.html",
   "scripts": {
-    "start": "parcel -p 3000 ./src/index.html --no-cache --open",
+    "start": "parcel -p 3000 ./src/index.html -open",
     "prebuild-dev": "shx rm -rf dist",
     "build-dev": "parcel build ./src/index.html --no-minify --public-url ./",
     "prebuild": "shx rm -rf dist",
