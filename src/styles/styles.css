@@ -4,6 +4,10 @@ div {
   border: 2px solid;
 }
 
+.nice {
+  background-color: lime;
+}
+
 div {
   border-color: red;
 }

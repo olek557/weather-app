@@ -5,6 +5,6 @@ export default class Wind extends Component {
     super(host, props);
   }
   render() {
-    return this.props.wind_speed + ' ' + this.props.unit;
+    return [this.props.wind_speed + ' ' + this.props.unit];
   }
 }

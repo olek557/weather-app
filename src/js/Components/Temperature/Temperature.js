@@ -5,6 +5,6 @@ export default class Temperature extends Component {
     super(host, props);
   }
   render() {
-    return [this.props.temperature + '&deg;' + this.props.unit];
+    return this.props.temperature + '&deg;' + this.props.unit;
   }
 }

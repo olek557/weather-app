@@ -32,6 +32,46 @@ export default class App extends Component {
           wind_speed: 3000000,
           unit: "mps"
         }
+      },
+      {
+        tag: "div",
+        content: "I am div",
+        classList: ["nice"],
+        attributes: [
+          {
+            name: "title",
+            value: "I am div title"
+          }
+        ]
+      },
+      {
+        tag: "div",
+        content: "Me div",
+        classList: ["nice"],
+        attributes: [
+          {
+            name: "title",
+            value: "I am div title"
+          }
+        ],
+        children: [
+          {
+            tag: 'div',
+            content: 'child1'
+          },
+          {
+            tag: 'div',
+            content: 'child2'
+          },
+          {
+            tag: 'div',
+            content: 'child1',
+            children: [
+              {tag: 'div', content: "iam child"},
+              {tag: 'div', content: "iam child"},
+            ]
+          }
+        ]
       }
     ];
   }
