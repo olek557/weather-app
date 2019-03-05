@@ -1,0 +1,24 @@
+div {
+  margin: .5rem;
+  padding: .2rem;
+  border: 2px solid;
+}
+
+div {
+  border-color: red;
+}
+div div {
+  border-color: orange;
+}
+div div div {
+  border-color: yellow;
+}
+div div div div {
+  border-color: green;
+}
+div div div div div {
+  border-color: blue;
+}
+div div div div div div {
+  border-color: cyan;
+}

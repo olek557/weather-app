@@ -1,5 +1,5 @@
-import '../styles/general.scss';
-import 'normalize.css';
+// import '../styles/general.scss';
+// import 'normalize.css';
 
 import {App} from './Components/App/';
 
