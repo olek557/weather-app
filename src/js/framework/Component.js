@@ -10,11 +10,12 @@ export default class Component {
     if (typeof content === "string") {
       this.host.innerHTML = content;
     } else {
-      content.map(item => this._vDomPrototypeElementToHtmlElement(item)) //[string|HTMLElement] = [HTMLElement]
-      .forEach(htmlElement => {
-        console.log(htmlElement);
-        this.host.appendChild(htmlElement);
-      });
+      content
+        .map(item => this._vDomPrototypeElementToHtmlElement(item)) //[string|HTMLElement] = [HTMLElement]
+        .forEach(htmlElement => {
+          console.log(htmlElement);
+          this.host.appendChild(htmlElement);
+        });
     }
   }
   /* @returns {string | [string | HTMLElement]} */
@@ -42,11 +43,13 @@ export default class Component {
           if (element.content) {
             container.innerHTML = element.content;
           }
-          [element.classList, element.attributes, element.children].forEach(item => {
-            if (element[item] && !Array.isArray(element[item])) {
-              element[item] = [element[item]];
+          [element.classList, element.attributes, element.children].forEach(
+            item => {
+              if (element[item] && !Array.isArray(element[item])) {
+                element[item] = [element[item]];
+              }
             }
-          });
+          );
           if (element.classList) {
             container.classList.add(...element.classList);
           }
@@ -57,7 +60,9 @@ export default class Component {
           }
           if (element.children) {
             element.children.forEach(element => {
-              const htmlElement = this._vDomPrototypeElementToHtmlElement(element);
+              const htmlElement = this._vDomPrototypeElementToHtmlElement(
+                element
+              );
               container.appendChild(htmlElement);
             });
           }
