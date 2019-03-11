@@ -14,11 +14,20 @@ export default class WeatherContainer extends Component {
         tag: "section",
         classList: ["card"],
         children: [
-          { tag: Search },
-          { tag: WeatherShort },
+          {
+            tag: Search
+          },
+          {
+            tag: WeatherShort,
+            props: {
+              city: "Lviv", 
+              temperature: "23",
+              shortDescription: "Mostly cloudy"
+            }
+          },
           { tag: WeatherDetails },
           { tag: Forecast },
-          'test'
+          "test"
         ]
       }
     ];

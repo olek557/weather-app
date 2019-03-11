@@ -8,9 +8,9 @@ export default class WeatherShort extends Component {
     /*html*/
     return `
       <header class="card__header">
-        <h1 class="h1">Lviv, UA</h1>
-        <h3 class="h3">Mostly cloudy</h3>
-        <h2 class="h2">21°C</h2>
+        <h1 class="h1">${ this.props.city}</h1>
+        <h3 class="h3">${ this.props.shortDescription}</h3>
+        <h2 class="h2">${ this.props.temperature}°C</h2>
         <i class="wi wi-day-sunny card__icon"></i>
       </header>
     `;
