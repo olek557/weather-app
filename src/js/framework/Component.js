@@ -7,31 +7,34 @@ export default class Component {
   _render() {
     this.host.innerHTML = "";
     let content = this.render();
-    if (typeof content === "string") {
-      this.host.innerHTML = content;
-    } else {
-      console.log("content= " + content )
-      content
-        .map(item => this._vDomPrototypeElementToHtmlElement(item)) //[string|HTMLElement] = [HTMLElement]
-        .forEach(htmlElement => {
-          console.log(htmlElement);
-          this.host.appendChild(htmlElement);
-        });
+    if (!Array.isArray(content)) {
+      content = [content];
     }
+    content
+      .map(item => this._vDomPrototypeElementToHtmlElement(item)) //[string|HTMLElement] = [HTMLElement]
+      .forEach(htmlElement => {
+        this.host.appendChild(htmlElement);
+      });
   }
   /* @returns {string | [string | HTMLElement]} */
-  render() {}
+  render() {
+    return 'Some problems happened with render.'
+  }
   /*
     @param {string | [string | HTMLElement| Object]} element
     @private
    */
   _vDomPrototypeElementToHtmlElement(element) {
-    console.log(element);
     if (typeof element === "string") {
-      const htmlElement = document.createElement("div");
-      htmlElement.innerHTML = element;
-
-      return htmlElement;
+      const containHtml = /<[a-z][\s\S]*>/i.test(element);
+      let container;
+      if (containHtml) {
+        container = document.createElement("div");
+        container.innerHTML = element;
+      } else {
+        container = document.createTextNode(element);
+      }
+      return container;
     } else {
       if (element.tag) {
         if (typeof element.tag === "function") {

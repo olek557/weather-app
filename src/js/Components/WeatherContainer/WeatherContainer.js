@@ -12,12 +12,13 @@ export default class WeatherContainer extends Component {
     return [
       {
         tag: "section",
-        classList: ['card'],
+        classList: ["card"],
         children: [
           { tag: Search },
           { tag: WeatherShort },
           { tag: WeatherDetails },
-          { tag: Forecast }
+          { tag: Forecast },
+          'test'
         ]
       }
     ];
