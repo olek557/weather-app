@@ -10,6 +10,7 @@ export default class Component {
     if (typeof content === "string") {
       this.host.innerHTML = content;
     } else {
+      console.log("content= " + content )
       content
         .map(item => this._vDomPrototypeElementToHtmlElement(item)) //[string|HTMLElement] = [HTMLElement]
         .forEach(htmlElement => {
