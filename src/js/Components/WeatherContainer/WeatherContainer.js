@@ -20,13 +20,28 @@ export default class WeatherContainer extends Component {
           {
             tag: WeatherShort,
             props: {
-              city: "Lviv", 
-              temperature: "23",
+              city: "Lviv",
+              temperature: "43",
               shortDescription: "Mostly cloudy"
             }
           },
-          { tag: WeatherDetails },
-          { tag: Forecast },
+          {
+            tag: WeatherDetails,
+            props: {
+              pressure: 1018,
+              humidity: 87,
+              wind: 'Light breeze, 3.0 m/s, West ( 260 )',
+              cloudiness: 'Broken clouds'
+            }
+          },
+          {
+            tag: Forecast,
+            props: {
+              forecast: [
+
+              ],
+            }
+          },
           "test"
         ]
       }
