@@ -1,5 +1,3 @@
-// import { Temperature } from "../Temperature";
-// import { Wind } from "../Wind";
 import { WeatherContainer } from "../WeatherContainer";
 import Component from "../../framework/Component";
 

@@ -1,8 +1,7 @@
 import Component from "../../framework/Component";
 import { Search } from "../Search";
-import { WeatherShort } from "../WeatherShort";
-import { WeatherDetails } from "../WeatherDetails";
-import { Forecast } from "../Forecast";
+import { CurrentWeather } from "../CurrentWeather";
+import { WeatherForecast } from "../WeatherForecast";
 
 export default class WeatherContainer extends Component {
   constructor(host, props) {
@@ -18,31 +17,39 @@ export default class WeatherContainer extends Component {
             tag: Search
           },
           {
-            tag: WeatherShort,
+            tag: CurrentWeather,
             props: {
               city: "Lviv",
               temperature: "43",
-              shortDescription: "Mostly cloudy"
-            }
-          },
-          {
-            tag: WeatherDetails,
-            props: {
+              shortDescription: "Mostly cloudy",
               pressure: 1018,
               humidity: 87,
-              wind: 'Light breeze, 3.0 m/s, West ( 260 )',
-              cloudiness: 'Broken clouds'
+              wind: "Light breeze, 3.0 m/s, West ( 260 )",
+              cloudiness: "Broken clouds"
             }
           },
           {
-            tag: Forecast,
+            tag: WeatherForecast,
             props: {
               forecast: [
-
-              ],
+                {
+                  date: "23.01",
+                  temperature: "21",
+                  units: 'metric'
+                },
+                {
+                  date: "24.01",
+                  temperature: "12",
+                  units: 'metric'
+                },
+                {
+                  date: "25.01",
+                  temperature: "22",
+                  units: 'metric'
+                }
+              ]
             }
-          },
-          "test"
+          }
         ]
       }
     ];
