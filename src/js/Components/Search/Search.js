@@ -5,25 +5,35 @@ export default class Search extends Component {
     super(host, props);
   }
   bindEverything() {
-    // this.onClick = this.onClick.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
-  onClick() {
-    console.log("i am here");
+
+  onSubmit(event) {
+    event.preventDefault();
+    this.props.onSearch(event.target.cityName.value);
   }
 
   render() {
     return [
       {
-        tag: "div",
+        tag: "form",
         classList: ["search-input"],
+        eventHandlers: {
+          submit: this.onSubmit
+        },
         children: [
-          `<input type="text" class="search-input__input"></input>`,
+          `<input type="text" class="search-input__input" name="cityName"></input>`,
           {
-            tag: "button",
+            tag: "input",
             classList: ['search-input__btn'],
-            eventHandlers: {
-              click: this.onClick
-            },
+            attributes: [
+              { name: 'type',
+                value: 'submit'
+              },
+              { name: 'value',
+                value: ''
+              },
+            ],
             children: [
               `<i class="search-input__icon"></i>`
             ]

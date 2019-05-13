@@ -7,6 +7,7 @@ export default class Component {
   }
   bindEverything() {}
   _render() {
+    console.log('I am _render')
     this.host.innerHTML = "";
     let content = this.render();
     if (!Array.isArray(content)) {
@@ -40,7 +41,7 @@ export default class Component {
     } else {
       if (element.tag) {
         if (typeof element.tag === "function") {
-          const container = document.createElement("div");
+          const container = document.createDocumentFragment();
           new element.tag(container, element.props);
           return container;
         } else {
