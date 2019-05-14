@@ -9,23 +9,27 @@ import fetchWeather from "../../framework/api";
 export default class WeatherContainer extends Component {
   constructor(host, props) {
     super(host, props);
-    this.cityWeatherData = null;
+    this.props.weatherData = null;
   }
+
   bindEverything() {
     this.handleSearch = this.handleSearch.bind(this);
   }
 
   handleSearch(city) {
     fetchWeather(city, 'weather').then(data => {
-      this.cityWeatherData = data;
-      this._render();
+      // this.props.weatherData = data;
+      // console.log('this', this);
+      this.props.onDataRecived(data)
     });
   }
 
 
   render() {
-    if (this.cityWeatherData) {
-      console.log(this.cityWeatherData ? 'true' : 'false')
+    if (this.props.weatherData) {
+      console.log('I am render number 1');
+      // console.log(this.props.weatherData ? 'true' : 'false')
+      // console.log(this.props.weatherData.main.temp)
       return [
         {
           tag: "section",
@@ -40,11 +44,11 @@ export default class WeatherContainer extends Component {
             {
               tag: CurrentWeather,
               props: {
-                city: 'this.cityWeatherData.name',
-                temperature: this.cityWeatherData.main.temp,
-                shortDescription: this.cityWeatherData.weather[0].description,
-                pressure: this.cityWeatherData.pressure,
-                humidity: this.cityWeatherData.humidity,
+                city: this.props.weatherData.name,
+                temperature: this.props.weatherData.main.temp,
+                shortDescription: this.props.weatherData.weather[0].description,
+                pressure: this.props.weatherData.pressure,
+                humidity: this.props.weatherData.humidity,
                 wind: "Light breeze, 3.0 m/s, West ( 260 )",
                 cloudiness: "Broken clouds"
               }
@@ -84,6 +88,7 @@ export default class WeatherContainer extends Component {
       ];
 
     } else {
+      console.log('I am render number 2');
       return [{
         tag: "section",
         classList: ["card"],

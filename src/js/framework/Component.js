@@ -7,7 +7,7 @@ export default class Component {
   }
   bindEverything() {}
   _render() {
-    console.log('I am _render')
+    console.log('I am _render', 'this.host', this.host, this.constructor.name)
     this.host.innerHTML = "";
     let content = this.render();
     if (!Array.isArray(content)) {
@@ -75,7 +75,7 @@ export default class Component {
               const htmlElement = this._vDomPrototypeElementToHtmlElement(
                 element
               );
-              container.appendChild(htmlElement);
+              container.append(htmlElement);
             });
           }
           return container;
