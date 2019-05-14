@@ -17,19 +17,13 @@ export default class WeatherContainer extends Component {
   }
 
   handleSearch(city) {
-    fetchWeather(city, 'weather').then(data => {
-      // this.props.weatherData = data;
-      // console.log('this', this);
-      this.props.onDataRecived(data)
+    fetchWeather(city, "weather").then(data => {
+      this.props.onDataReceived(data);
     });
   }
 
-
   render() {
     if (this.props.weatherData) {
-      console.log('I am render number 1');
-      // console.log(this.props.weatherData ? 'true' : 'false')
-      // console.log(this.props.weatherData.main.temp)
       return [
         {
           tag: "section",
@@ -50,7 +44,8 @@ export default class WeatherContainer extends Component {
                 pressure: this.props.weatherData.pressure,
                 humidity: this.props.weatherData.humidity,
                 wind: "Light breeze, 3.0 m/s, West ( 260 )",
-                cloudiness: "Broken clouds"
+                cloudiness: "Broken clouds",
+                addToFavorites: this.props.onAddToFavorite
               }
             },
             {
@@ -60,47 +55,51 @@ export default class WeatherContainer extends Component {
                   {
                     date: "23.01",
                     temperature: "21",
-                    units: 'metric'
+                    units: "metric"
                   },
                   {
                     date: "24.01",
                     temperature: "12",
-                    units: 'metric'
+                    units: "metric"
                   },
                   {
                     date: "25.01",
                     temperature: "22",
-                    units: 'metric'
+                    units: "metric"
                   }
                 ]
               }
             },
             {
               tag: FavoritesCity,
-              props: ['Lviv', 'Kyiv']
+              props: this.props.favoritesCity
             },
             {
               tag: HistorySearch,
-              props: ['London', 'Paris']
-            },
+              props: this.props.searchHistory
+            }
           ]
         }
       ];
-
     } else {
-      console.log('I am render number 2');
-      return [{
-        tag: "section",
-        classList: ["card"],
-        children: [
-          {
-            tag: Search,
-            props: {
-              onSearch: this.handleSearch
+      return [
+        {
+          tag: "section",
+          classList: ["card"],
+          children: [
+            {
+              tag: "p",
+              content: "Please enter city name"
+            },
+            {
+              tag: Search,
+              props: {
+                onSearch: this.handleSearch
+              }
             }
-          }
-        ]
-      }];
+          ]
+        }
+      ];
     }
   }
 }
