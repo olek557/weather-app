@@ -1,8 +1,7 @@
 import Component from "../../framework/Component";
 import { Search } from "../Search";
 import { CurrentWeather } from "../CurrentWeather";
-import { FavoritesCity } from "../FavoritesCity";
-import { HistorySearch } from "../HistorySearch";
+import { CityList } from "../CityList";
 import { WeatherForecast } from "../WeatherForecast";
 import fetchWeather from "../../framework/api";
 
@@ -71,12 +70,25 @@ export default class WeatherContainer extends Component {
               }
             },
             {
-              tag: FavoritesCity,
-              props: this.props.favoritesCity
-            },
-            {
-              tag: HistorySearch,
-              props: this.props.searchHistory
+              tag: "div",
+              children: [
+                '<h2 class="h2">Favorites</h2>',
+                {
+                  tag: CityList,
+                  props: {
+                    city: this.props.favoritesCity,
+                    onClick: this.handleSearch
+                  }
+                },
+                '<h2 class="h2">History</h2>',
+                {
+                  tag: CityList,
+                  props: {
+                    city: this.props.searchHistory,
+                    onClick: this.handleSearch
+                  }
+                }
+              ]
             }
           ]
         }

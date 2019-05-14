@@ -5,8 +5,8 @@ export default class App extends Component {
   constructor(host) {
     super(host);
     this.cityWeatherData = null;
-    this.history = [];
-    this.favorites = [];
+    this.history = window.localStorage.getItem("searchCityHistory") ? JSON.parse(window.localStorage.getItem("searchCityHistory")) : [];
+    this.favorites = window.localStorage.getItem("favoriteCity")? JSON.parse(window.localStorage.getItem("favoriteCity")): [] ;
   }
 
   bindEverything() {
@@ -17,15 +17,22 @@ export default class App extends Component {
   handleData(city) {
     this.cityWeatherData = city;
     this.history.push(city.name);
-    console.log("history", this.history);
+    window.localStorage.setItem(
+      "searchCityHistory",
+      JSON.stringify(this.history)
+    );
     this._render();
   }
 
   handleAddToFavorites(city) {
     if (this.favorites.indexOf(city) === -1) {
       this.favorites.push(city);
+      window.localStorage.setItem(
+        "favoriteCity",
+        JSON.stringify(this.favorites)
+      );
     }
-    console.log("favorites", this.favorites);
+    this._render();
   }
 
   render() {
