@@ -1,9 +1,9 @@
 import Component from "../../framework/Component";
 import { Search } from "../Search";
 import { CurrentWeather } from "../CurrentWeather";
-import { CityList } from "../CityList";
 import { WeatherForecast } from "../WeatherForecast";
 import fetchWeather from "../../framework/api";
+import { Cities } from "../Cities";
 
 export default class WeatherContainer extends Component {
   constructor(host, props) {
@@ -40,8 +40,8 @@ export default class WeatherContainer extends Component {
                 city: this.props.weatherData.name,
                 temperature: this.props.weatherData.main.temp,
                 shortDescription: this.props.weatherData.weather[0].description,
-                pressure: this.props.weatherData.pressure,
-                humidity: this.props.weatherData.humidity,
+                pressure: this.props.weatherData.main.pressure,
+                humidity: this.props.weatherData.main.humidity,
                 wind: "Light breeze, 3.0 m/s, West ( 260 )",
                 cloudiness: "Broken clouds",
                 addToFavorites: this.props.onAddToFavorite
@@ -70,25 +70,12 @@ export default class WeatherContainer extends Component {
               }
             },
             {
-              tag: "div",
-              children: [
-                '<h2 class="h2">Favorites</h2>',
-                {
-                  tag: CityList,
-                  props: {
-                    city: this.props.favoritesCity,
-                    onClick: this.handleSearch
-                  }
-                },
-                '<h2 class="h2">History</h2>',
-                {
-                  tag: CityList,
-                  props: {
-                    city: this.props.searchHistory,
-                    onClick: this.handleSearch
-                  }
-                }
-              ]
+              tag: Cities,
+              props: {
+                cityFavorite: this.props.favoritesCity,
+                cityHistory: this.props.searchHistory,
+                onClick: this.handleSearch
+              }
             }
           ]
         }
@@ -107,6 +94,14 @@ export default class WeatherContainer extends Component {
               tag: Search,
               props: {
                 onSearch: this.handleSearch
+              }
+            },
+            {
+              tag: Cities,
+              props: {
+                cityFavorite: this.props.favoritesCity,
+                cityHistory: this.props.searchHistory,
+                onClick: this.handleSearch
               }
             }
           ]

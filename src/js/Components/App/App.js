@@ -1,12 +1,17 @@
 import { WeatherContainer } from "../WeatherContainer";
 import Component from "../../framework/Component";
+import getIconClass from "../../framework/icon";
 
 export default class App extends Component {
   constructor(host) {
     super(host);
     this.cityWeatherData = null;
-    this.history = window.localStorage.getItem("searchCityHistory") ? JSON.parse(window.localStorage.getItem("searchCityHistory")) : [];
-    this.favorites = window.localStorage.getItem("favoriteCity")? JSON.parse(window.localStorage.getItem("favoriteCity")): [] ;
+    this.history = window.localStorage.getItem("searchCityHistory")
+      ? JSON.parse(window.localStorage.getItem("searchCityHistory"))
+      : [];
+    this.favorites = window.localStorage.getItem("favoriteCity")
+      ? JSON.parse(window.localStorage.getItem("favoriteCity"))
+      : [];
   }
 
   bindEverything() {
@@ -16,7 +21,9 @@ export default class App extends Component {
 
   handleData(city) {
     this.cityWeatherData = city;
+    console.log(getIconClass('day-sunny'))
     this.history.push(city.name);
+    console.log(city);
     window.localStorage.setItem(
       "searchCityHistory",
       JSON.stringify(this.history)
