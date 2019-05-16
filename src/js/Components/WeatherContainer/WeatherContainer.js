@@ -4,25 +4,27 @@ import { CurrentWeather } from "../CurrentWeather";
 import { WeatherForecast } from "../WeatherForecast";
 import fetchWeather from "../../framework/api";
 import { Cities } from "../Cities";
+import getIconClass from "../../framework/icon";
 
 export default class WeatherContainer extends Component {
   constructor(host, props) {
     super(host, props);
-    this.props.weatherData = null;
   }
 
-  bindEverything() {
+  init() {
+    this.state = this.props;
     this.handleSearch = this.handleSearch.bind(this);
   }
 
   handleSearch(city) {
     fetchWeather(city, "weather").then(data => {
-      this.props.onDataReceived(data);
+      this.state.onDataReceived(data);
     });
   }
 
   render() {
-    if (this.props.weatherData) {
+    console.log('i was rendeered');
+    if (this.state.weatherData) {
       return [
         {
           tag: "section",
@@ -37,14 +39,15 @@ export default class WeatherContainer extends Component {
             {
               tag: CurrentWeather,
               props: {
-                city: this.props.weatherData.name,
-                temperature: this.props.weatherData.main.temp,
-                shortDescription: this.props.weatherData.weather[0].description,
-                pressure: this.props.weatherData.main.pressure,
-                humidity: this.props.weatherData.main.humidity,
+                city: this.state.weatherData.name,
+                temperature: this.state.weatherData.main.temp,
+                weatherIcon: getIconClass(this.state.weatherData.weather[0].id),
+                shortDescription: this.state.weatherData.weather[0].description,
+                pressure: this.state.weatherData.main.pressure,
+                humidity: this.state.weatherData.main.humidity,
                 wind: "Light breeze, 3.0 m/s, West ( 260 )",
                 cloudiness: "Broken clouds",
-                addToFavorites: this.props.onAddToFavorite
+                addToFavorites: this.state.onAddToFavorite
               }
             },
             {
@@ -72,8 +75,8 @@ export default class WeatherContainer extends Component {
             {
               tag: Cities,
               props: {
-                cityFavorite: this.props.favoritesCity,
-                cityHistory: this.props.searchHistory,
+                cityFavorite: this.state.favoritesCity,
+                cityHistory: this.state.searchHistory,
                 onClick: this.handleSearch
               }
             }
@@ -81,6 +84,7 @@ export default class WeatherContainer extends Component {
         }
       ];
     } else {
+      console.log('state', this.state)
       return [
         {
           tag: "section",
@@ -99,8 +103,8 @@ export default class WeatherContainer extends Component {
             {
               tag: Cities,
               props: {
-                cityFavorite: this.props.favoritesCity,
-                cityHistory: this.props.searchHistory,
+                cityFavorite: this.state.favoritesCity,
+                cityHistory: this.state.searchHistory,
                 onClick: this.handleSearch
               }
             }

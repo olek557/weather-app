@@ -4,7 +4,7 @@ export default class Search extends Component {
   constructor(host, props) {
     super(host, props);
   }
-  bindEverything() {
+  init() {
     this.onSubmit = this.onSubmit.bind(this);
   }
 

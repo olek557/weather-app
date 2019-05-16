@@ -2,10 +2,15 @@ export default class Component {
   constructor(host, props = {}) {
     this.host = host;
     this.props = props;
-    this.bindEverything();
+    this.init();
     this._render();
   }
-  bindEverything() {}
+  init() {}
+
+  updateState(stateDelta) {
+    this.state = Object.assign({}, this.state, stateDelta);
+    this._render();
+  }
   _render() {
     this.host.innerHTML = "";
     let content = this.render();

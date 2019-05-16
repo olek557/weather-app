@@ -5,6 +5,9 @@ export default class Cities extends Component {
   constructor(host, props) {
     super(host, props);
   }
+  init() {
+    this.state = this.props;
+  }
   render() {
     return [
       {
@@ -12,32 +15,32 @@ export default class Cities extends Component {
         children: [
           '<h2 class="h2">Favorites</h2>',
           {
-            tag: 'ul',
-            classList: ['list'],
+            tag: "ul",
+            classList: ["list"],
             children: [
               {
                 tag: CityList,
                 props: {
-                  city: this.props.cityFavorite,
-                  onClick: this.props.onClick
+                  city: this.state.cityFavorite,
+                  onClick: this.state.onClick
                 }
-              },
+              }
             ]
           },
           '<h2 class="h2">History</h2>',
           {
-            tag: 'ul',
-            classList: ['list'],
+            tag: "ul",
+            classList: ["list"],
             children: [
               {
                 tag: CityList,
                 props: {
-                  city: this.props.cityHistory,
-                  onClick: this.props.onClick
+                  city: this.state.cityHistory,
+                  onClick: this.state.onClick
                 }
-              },
+              }
             ]
-          },
+          }
         ]
       }
     ];

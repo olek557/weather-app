@@ -4,6 +4,9 @@ export default class CurrentWeather extends Component {
   constructor(host, props) {
     super(host, props);
   }
+  init() {
+    this.state = this.props;
+  }
   convertFarengateToCelsius(temp) {
     return Math.round(temp - 273.15);
   }
@@ -11,22 +14,30 @@ export default class CurrentWeather extends Component {
     return [
       {
         tag: "header",
-        classList: "card__header",
+        classList: ["card__header"],
         children: [
-          `<h1 class="h1">${this.props.city}</h1>`,
           {
-            tag: "button",
-            classList: "",
-            content: "Add",
-            eventHandlers: {
-              click: () => {
-                this.props.addToFavorites(this.props.city);
-              }
-            }
+            tag: 'h1',
+            classList: ["h1"],
+            children: [
+              this.state.city,
+              {
+                tag: "button",
+                classList: ["favorite-btn"],
+                content: "&#11089;",
+                eventHandlers: {
+                  click: () => {
+                    this.state.addToFavorites(this.state.city);
+                  }
+                }
+              },
+            ]
           },
-          `<h3 class="h3">${this.props.shortDescription}</h3>`,
-          `<h2 class="h2">${this.convertFarengateToCelsius(this.props.temperature)}°C</h2>`,
-          `<i class="wi wi-day-sunny card__icon"></i>`
+          `<h3 class="h3">${this.state.shortDescription}</h3>`,
+          `<h2 class="h2">${this.convertFarengateToCelsius(
+            this.state.temperature
+          )}°C</h2>`,
+          `<i class="wi ${this.state.weatherIcon} card__icon"></i>`
         ]
       },
       `<div class="card__content">
@@ -35,7 +46,7 @@ export default class CurrentWeather extends Component {
             Wind
           </div>
           <div class="row__value">
-            ${this.props.wind}
+            ${this.state.wind}
             <i class="wi wi-towards-0-deg"></i>
           </div>
         </div>
@@ -44,7 +55,7 @@ export default class CurrentWeather extends Component {
             Humidity
           </div>
           <div class="row__value">
-            ${this.props.humidity}
+            ${this.state.humidity}
           </div>
         </div>
         <div class="row">
@@ -52,7 +63,7 @@ export default class CurrentWeather extends Component {
             Pressure
           </div>
           <div class="row__value">
-            ${this.props.pressure}
+            ${this.state.pressure}
           </div>
         </div>
         <div class="row">
@@ -60,7 +71,7 @@ export default class CurrentWeather extends Component {
             Cloudiness
           </div>
           <div class="row__value">
-            ${this.props.cloudiness}
+            ${this.state.cloudiness}
           </div>
         </div>
       </div>`

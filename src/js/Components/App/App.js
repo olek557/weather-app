@@ -1,11 +1,16 @@
 import { WeatherContainer } from "../WeatherContainer";
 import Component from "../../framework/Component";
-import getIconClass from "../../framework/icon";
 
 export default class App extends Component {
   constructor(host) {
     super(host);
     this.cityWeatherData = null;
+    this.weatherIcon = null;
+  }
+
+  init() {
+    this.handleData = this.handleData.bind(this);
+    this.handleAddToFavorites = this.handleAddToFavorites.bind(this);
     this.history = window.localStorage.getItem("searchCityHistory")
       ? JSON.parse(window.localStorage.getItem("searchCityHistory"))
       : [];
@@ -14,14 +19,8 @@ export default class App extends Component {
       : [];
   }
 
-  bindEverything() {
-    this.handleData = this.handleData.bind(this);
-    this.handleAddToFavorites = this.handleAddToFavorites.bind(this);
-  }
-
   handleData(city) {
     this.cityWeatherData = city;
-    console.log(getIconClass('day-sunny'))
     this.history.push(city.name);
     console.log(city);
     window.localStorage.setItem(
@@ -49,9 +48,9 @@ export default class App extends Component {
         props: {
           onDataReceived: this.handleData,
           onAddToFavorite: this.handleAddToFavorites,
-          weatherData: this.cityWeatherData,
           searchHistory: this.history,
-          favoritesCity: this.favorites
+          favoritesCity: this.favorites,
+          weatherData: this.cityWeatherData,
         }
       }
     ];
