@@ -10,22 +10,24 @@ export default class App extends Component {
 
   init() {
     this.state = {};
-    this.updateState({ isFavorite: false });
-    console.log('this.state',this.state)
     this.handleData = this.handleData.bind(this);
     this.handleAddToFavorites = this.handleAddToFavorites.bind(this);
-    this.history = window.localStorage.getItem("searchCityHistory")
-      ? JSON.parse(window.localStorage.getItem("searchCityHistory"))
-      : [];
-    this.favorites = window.localStorage.getItem("favoriteCity")
-      ? JSON.parse(window.localStorage.getItem("favoriteCity"))
+    this.history = this.getCityList("searchCityHistory");
+    this.favorites = this.getCityList("favoriteCity");
+    // this.updateState({ isFavorite: false });
+  }
+
+  getCityList(listName) {
+    return window.localStorage.getItem(listName)
+      ? JSON.parse(window.localStorage.getItem(listName))
       : [];
   }
 
-  handleData(city) {
-    this.cityWeatherData = city;
+  handleData(cityObj) {
+    const { city } = cityObj;
+    console.log("city", city);
+    this.cityWeatherData = cityObj;
     this.history.push(city.name);
-    console.log(city);
     if (this.favorites.indexOf(city.name) !== -1) {
       this.updateState({ isFavorite: true });
     } else {
@@ -39,13 +41,21 @@ export default class App extends Component {
   }
 
   handleAddToFavorites(city) {
-    this.updateState({ isFavorite: true });
     if (this.favorites.indexOf(city) === -1) {
       this.favorites.push(city);
       window.localStorage.setItem(
         "favoriteCity",
         JSON.stringify(this.favorites)
       );
+      this.updateState({ isFavorite: true });
+    } else {
+      const index = this.favorites.indexOf(city);
+      this.favorites.splice(index, 1);
+      window.localStorage.setItem(
+        "favoriteCity",
+        JSON.stringify(this.favorites)
+      );
+      this.updateState({ isFavorite: false });
     }
   }
 
