@@ -9,6 +9,9 @@ export default class App extends Component {
   }
 
   init() {
+    this.state = {};
+    this.updateState({ isFavorite: false });
+    console.log('this.state',this.state)
     this.handleData = this.handleData.bind(this);
     this.handleAddToFavorites = this.handleAddToFavorites.bind(this);
     this.history = window.localStorage.getItem("searchCityHistory")
@@ -23,6 +26,11 @@ export default class App extends Component {
     this.cityWeatherData = city;
     this.history.push(city.name);
     console.log(city);
+    if (this.favorites.indexOf(city.name) !== -1) {
+      this.updateState({ isFavorite: true });
+    } else {
+      this.updateState({ isFavorite: false });
+    }
     window.localStorage.setItem(
       "searchCityHistory",
       JSON.stringify(this.history)
@@ -31,6 +39,7 @@ export default class App extends Component {
   }
 
   handleAddToFavorites(city) {
+    this.updateState({ isFavorite: true });
     if (this.favorites.indexOf(city) === -1) {
       this.favorites.push(city);
       window.localStorage.setItem(
@@ -38,7 +47,6 @@ export default class App extends Component {
         JSON.stringify(this.favorites)
       );
     }
-    this._render();
   }
 
   render() {
@@ -46,11 +54,12 @@ export default class App extends Component {
       {
         tag: WeatherContainer,
         props: {
+          isFavorite: this.state.isFavorite,
           onDataReceived: this.handleData,
           onAddToFavorite: this.handleAddToFavorites,
           searchHistory: this.history,
           favoritesCity: this.favorites,
-          weatherData: this.cityWeatherData,
+          weatherData: this.cityWeatherData
         }
       }
     ];

@@ -22,7 +22,7 @@ export default class Search extends Component {
           submit: this.onSubmit
         },
         children: [
-          `<input type="text" class="search-input__input" name="cityName"></input>`,
+          `<input type="text" class="search-input__input" name="cityName" placeholder="Enter city name"></input>`,
           {
             tag: "input",
             classList: ['search-input__btn'],

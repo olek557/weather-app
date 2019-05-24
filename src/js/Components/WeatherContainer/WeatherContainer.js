@@ -17,18 +17,18 @@ export default class WeatherContainer extends Component {
   }
 
   handleSearch(city) {
-    fetchWeather(city, "weather").then(data => {
-      this.state.onDataReceived(data);
+    fetchWeather(city, "forecast").then(data => {
+      this.props.onDataReceived(data);
     });
   }
 
   render() {
-    console.log('i was rendeered');
     if (this.state.weatherData) {
+      console.log(this.state)
       return [
         {
           tag: "section",
-          classList: ["card"],
+          classList: ["card", `${this.props.isFavorite ? "card--favorite" : null}`],
           children: [
             {
               tag: Search,
@@ -39,12 +39,12 @@ export default class WeatherContainer extends Component {
             {
               tag: CurrentWeather,
               props: {
-                city: this.state.weatherData.name,
-                temperature: this.state.weatherData.main.temp,
-                weatherIcon: getIconClass(this.state.weatherData.weather[0].id),
-                shortDescription: this.state.weatherData.weather[0].description,
-                pressure: this.state.weatherData.main.pressure,
-                humidity: this.state.weatherData.main.humidity,
+                city: this.state.weatherData.city.name,
+                temperature: this.state.weatherData.list[0].main.temp,
+                weatherIcon: getIconClass(this.state.weatherData.list[0].weather[0].id),
+                shortDescription: this.state.weatherData.list[0].weather[0].description,
+                pressure: this.state.weatherData.list[0].main.pressure,
+                humidity: this.state.weatherData.list[0].main.humidity,
                 wind: "Light breeze, 3.0 m/s, West ( 260 )",
                 cloudiness: "Broken clouds",
                 addToFavorites: this.state.onAddToFavorite
@@ -84,16 +84,12 @@ export default class WeatherContainer extends Component {
         }
       ];
     } else {
-      console.log('state', this.state)
+      console.log("state", this.state);
       return [
         {
           tag: "section",
           classList: ["card"],
           children: [
-            {
-              tag: "p",
-              content: "Please enter city name"
-            },
             {
               tag: Search,
               props: {
