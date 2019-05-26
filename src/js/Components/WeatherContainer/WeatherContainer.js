@@ -12,23 +12,76 @@ export default class WeatherContainer extends Component {
   }
 
   init() {
-    this.state = this.props;
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleClearHistory = this.handleClearHistory.bind(this);
+    this.handleAddToFavorites = this.handleAddToFavorites.bind(this);
+
+    this.state = {
+      history: this.getCityList("searchCityHistory"),
+      favorites: this.getCityList("favoriteCity"),
+      cityForesast: []
+    };
   }
 
+  getCityList(listName) {
+    return window.localStorage.getItem(listName)
+      ? JSON.parse(window.localStorage.getItem(listName))
+      : [];
+  }
+
+  updateLocalStorage(variable, value) {
+    window.localStorage.setItem(variable, JSON.stringify(value));
+  }
+
+  convertFarengateToCelsius(temp) {
+    return Math.round(temp - 273.15);
+  }
+
+  handleAddToFavorites(city) {
+    let { favorites, isFavorite } = this.state;
+    const index = favorites.indexOf(city);
+    isFavorite = !isFavorite;
+    isFavorite ? favorites.push(city) : favorites.splice(index, 1);
+    this.updateLocalStorage("favoriteCity", favorites);
+    this.updateState({ isFavorite });
+  }
   handleSearch(city) {
-    fetchWeather(city, "forecast").then(data => {
-      this.props.onDataReceived(data);
-    });
+    let isCityInFavorite = false;
+    const { history, favorites } = this.state;
+    fetchWeather(city, "forecast")
+      .then(data => {
+        const { city, list } = data;
+        history.push(city.name);
+        this.updateLocalStorage("searchCityHistory", history);
+        if (favorites.indexOf(city.name) !== -1) {
+          isCityInFavorite = true;
+        }
+        this.updateState({
+          isFavorite: isCityInFavorite,
+          cityWeatherData: data,
+          cityForesast: list,
+          history: history
+        });
+      })
+      .catch(error => {
+        console.log(
+          "There has been a problem with your fetch operation: ",
+          error.message
+        );
+      });
+  }
+  handleClearHistory() {
+    this.updateLocalStorage("searchCityHistory", "");
+    this.updateState({ history: [] });
   }
 
   render() {
-    if (this.state.weatherData) {
-      console.log(this.state)
+    console.log(this.state);
+    if (this.state.cityWeatherData) {
       return [
         {
           tag: "section",
-          classList: ["card", `${this.props.isFavorite ? "card--favorite" : null}`],
+          classList: ["card", `${this.state.isFavorite && "card--favorite"}`],
           children: [
             {
               tag: Search,
@@ -39,52 +92,57 @@ export default class WeatherContainer extends Component {
             {
               tag: CurrentWeather,
               props: {
-                city: this.state.weatherData.city.name,
-                temperature: this.state.weatherData.list[0].main.temp,
-                weatherIcon: getIconClass(this.state.weatherData.list[0].weather[0].id),
-                shortDescription: this.state.weatherData.list[0].weather[0].description,
-                pressure: this.state.weatherData.list[0].main.pressure,
-                humidity: this.state.weatherData.list[0].main.humidity,
+                city: this.state.cityWeatherData.city.name,
+                temperature: this.state.cityWeatherData.list[0].main.temp,
+                weatherIcon: getIconClass(
+                  this.state.cityWeatherData.list[0].weather[0].id
+                ),
+                shortDescription: this.state.cityWeatherData.list[0].weather[0]
+                  .description,
+                pressure: this.state.cityWeatherData.list[0].main.pressure,
+                humidity: this.state.cityWeatherData.list[0].main.humidity,
                 wind: "Light breeze, 3.0 m/s, West ( 260 )",
                 cloudiness: "Broken clouds",
-                addToFavorites: this.state.onAddToFavorite
+                addToFavorites: this.handleAddToFavorites
               }
             },
             {
               tag: WeatherForecast,
               props: {
-                forecast: [
-                  {
-                    date: "23.01",
-                    temperature: "21",
-                    units: "metric"
-                  },
-                  {
-                    date: "24.01",
-                    temperature: "12",
-                    units: "metric"
-                  },
-                  {
-                    date: "25.01",
-                    temperature: "22",
-                    units: "metric"
-                  }
-                ]
+                forecast: this.state.cityForesast
+                  .filter(item => {
+                    const date = new Date(item.dt_txt);
+                    if (date > new Date() && date.getHours() === 15) {
+                      return true;
+                    }
+                  })
+                  .slice(0, -1)
+                  .map(item => {
+                    const date = new Date(item.dt_txt);
+                    return {
+                      date: `${date.getDate()}.${date.getMonth()}`,
+                      temperature: this.convertFarengateToCelsius(
+                        item.main.temp
+                      ),
+                      units: "metric",
+                      icon: getIconClass(item.weather[0].id)
+                    };
+                  })
               }
             },
             {
               tag: Cities,
               props: {
-                cityFavorite: this.state.favoritesCity,
-                cityHistory: this.state.searchHistory,
-                onClick: this.handleSearch
+                cityFavorite: this.state.favorites,
+                cityHistory: this.state.history,
+                onClick: this.handleSearch,
+                onClearHistory: this.handleClearHistory
               }
             }
           ]
         }
       ];
     } else {
-      console.log("state", this.state);
       return [
         {
           tag: "section",
@@ -99,9 +157,10 @@ export default class WeatherContainer extends Component {
             {
               tag: Cities,
               props: {
-                cityFavorite: this.state.favoritesCity,
-                cityHistory: this.state.searchHistory,
-                onClick: this.handleSearch
+                cityFavorite: this.state.favorites,
+                cityHistory: this.state.history,
+                onClick: this.handleSearch,
+                onClearHistory: this.handleClearHistory
               }
             }
           ]

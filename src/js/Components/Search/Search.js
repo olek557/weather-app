@@ -25,18 +25,12 @@ export default class Search extends Component {
           `<input type="text" class="search-input__input" name="cityName" placeholder="Enter city name"></input>`,
           {
             tag: "input",
-            classList: ['search-input__btn'],
+            classList: ["search-input__btn"],
             attributes: [
-              { name: 'type',
-                value: 'submit'
-              },
-              { name: 'value',
-                value: ''
-              },
+              { name: "type", value: "submit" },
+              { name: "value", value: "" }
             ],
-            children: [
-              `<i class="search-input__icon"></i>`
-            ]
+            children: [`<i class="search-input__icon"></i>`]
           }
         ]
       }

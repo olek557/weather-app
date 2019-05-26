@@ -40,6 +40,14 @@ export default class Cities extends Component {
                 }
               }
             ]
+          },
+          {
+            tag: "button",
+            classList: ["btn-link"],
+            content: "Clear history",
+            eventHandlers: {
+              click: this.state.onClearHistory
+            }
           }
         ]
       }

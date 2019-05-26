@@ -45,7 +45,7 @@ export default class Component {
     } else {
       if (element.tag) {
         if (typeof element.tag === "function") {
-          const container = document.createDocumentFragment();
+          const container = document.createElement("div");
           new element.tag(container, element.props);
           return container;
         } else {
@@ -69,9 +69,12 @@ export default class Component {
               container.setAttribute(attributeSpec.name, attributeSpec.value);
             });
           }
-          if(element.eventHandlers) {
+          if (element.eventHandlers) {
             Object.keys(element.eventHandlers).forEach(eventType => {
-              container.addEventListener(eventType, element.eventHandlers[eventType]);
+              container.addEventListener(
+                eventType,
+                element.eventHandlers[eventType]
+              );
             });
           }
           if (element.children) {

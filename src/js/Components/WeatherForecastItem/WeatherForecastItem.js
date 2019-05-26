@@ -15,7 +15,7 @@ export default class WeatherForecastItem extends Component {
           ${this.props.temperature}°C
         </div>
         <div class="forecast__icon">
-          <i class="wi wi-night-sleet"></i>
+          <i class="wi ${this.props.icon}"></i>
         </div>
       </div>
     `;
