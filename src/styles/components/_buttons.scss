@@ -1,0 +1,23 @@
+.favorite-btn {
+  background: none;
+  border: none;
+  font-size: 31px;
+  line-height: 1;
+  position: absolute;
+  top: -12px;
+  cursor: pointer;
+  opacity: 0.2;
+  .card--favorite & {
+    opacity: 1;
+  }
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  box-shadow: none;
+  font-size: 11px;
+  cursor: pointer;
+  margin: 10px auto;
+  display: block;
+}

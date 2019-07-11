@@ -2,9 +2,14 @@
   "name": "weather-app",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.html",
   "scripts": {
-    "start": "parcel -p 3000 ./src/index.html --no-cache"
+    "start": "parcel -p 3000 ./src/index.html --open",
+    "prebuild-dev": "shx rm -rf dist",
+    "build-dev": "parcel build ./src/index.html --no-minify --public-url ./",
+    "prebuild": "shx rm -rf dist",
+    "build": "parcel build ./src/index.html --public-url ./",
+    "public": "push-dir --dir=dist --branch=gh-pages"
   },
   "repository": "git+https://github.com/olek557/weather-app.git",
   "keywords": [],
@@ -17,7 +22,9 @@
   "devDependencies": {
     "autoprefixer": "^9.4.9",
     "node-sass": "^4.11.0",
-    "parcel-bundler": "^1.11.0"
+    "parcel-bundler": "^1.11.0",
+    "sass": "^1.17.2",
+    "shx": "^0.3.2"
   },
   "dependencies": {
     "normalize.css": "^8.0.1"
