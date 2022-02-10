@@ -21,7 +21,7 @@
   "homepage": "https://github.com/olek557/weather-app#readme",
   "devDependencies": {
     "autoprefixer": "^9.4.9",
-    "node-sass": "^4.11.0",
+    "node-sass": "^7.0.0",
     "parcel-bundler": "^1.11.0",
     "sass": "^1.17.2",
     "shx": "^0.3.2"
